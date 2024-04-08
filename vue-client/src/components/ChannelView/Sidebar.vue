@@ -5,10 +5,20 @@ import { useRouter } from "vue-router";
 import VBtn from "@/components/common/VBtn.vue";
 import PublicChannelLabel from "@/components/ChannelView/PublicChannelLabel.vue";
 import PrivateChannelLabel from "@/components/ChannelView/PrivateChannelLabel.vue";
+import { socket } from "@/BackendService";
 
 const store = useMainStore();
 const router = useRouter();
 
+async function leaveChannel(channel) {
+  const res = await socket.emitWithAck("channel:leave", {
+    channelId: channel.id,
+  });
+
+  if (res.status === "OK") {
+    onSuccess(res.data);
+  }
+}
 async function logOut() {
   await BackendService.logOut();
   store.clear();
@@ -17,7 +27,10 @@ async function logOut() {
 </script>
 
 <template>
-  <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px">
+  <div
+    class="d-flex flex-column flex-shrink-0 p-3"
+    style="width: 280px"
+  >
     <a
       href="/"
       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-black text-decoration-none"
@@ -34,14 +47,18 @@ async function logOut() {
     <h6 class="mt-4">CHANNELS</h6>
 
     <ul class="nav nav-pills d-block overflow-auto mh-40">
-      <li v-if="!store.isInitialized" v-for="_ in 4" class="nav-item">
+      <li
+        v-if="!store.isInitialized"
+        v-for="_ in 4"
+        class="nav-item"
+      >
         <div class="placeholder-glow channel-placeholder">
           <span class="placeholder w-75"></span>
         </div>
       </li>
 
       <li
-        class="nav-item"
+        class="nav-item flex"
         v-for="channel in store.publicChannels"
         :key="channel.id"
       >
@@ -50,12 +67,24 @@ async function logOut() {
           :to="{ params: { channelId: channel.id } }"
           :class="store.isChannelSelected(channel.id) ? 'active' : 'text-black'"
         >
-          <PublicChannelLabel :channel="channel" class="flex-grow-1" />
+          <PublicChannelLabel
+            :channel="channel"
+            class="flex-grow-1"
+          />
 
-          <span class="badge text-bg-primary" v-if="channel.unreadCount > 0">{{
-            channel.unreadCount
-          }}</span>
+          <span
+            class="badge text-bg-primary"
+            v-if="channel.unreadCount > 0"
+          >{{
+          channel.unreadCount
+        }}</span>
         </router-link>
+        <v-btn
+          color="primary"
+          @click="leaveChannel(channel)"
+        >
+          Leave
+        </v-btn>
       </li>
 
       <li>
@@ -75,7 +104,11 @@ async function logOut() {
     <h6 class="mt-4">DIRECT MESSAGES</h6>
 
     <ul class="nav nav-pills d-block overflow-auto mh-40">
-      <li v-if="!store.isInitialized" v-for="_ in 4" class="nav-item">
+      <li
+        v-if="!store.isInitialized"
+        v-for="_ in 4"
+        class="nav-item"
+      >
         <div class="placeholder-glow channel-placeholder">
           <span class="placeholder w-75"></span>
         </div>
@@ -91,11 +124,17 @@ async function logOut() {
           :to="{ params: { channelId: channel.id } }"
           :class="store.isChannelSelected(channel.id) ? 'active' : 'text-black'"
         >
-          <PrivateChannelLabel :channel="channel" class="flex-grow-1" />
+          <PrivateChannelLabel
+            :channel="channel"
+            class="flex-grow-1"
+          />
 
-          <span class="badge text-bg-primary" v-if="channel.unreadCount > 0">{{
-            channel.unreadCount
-          }}</span>
+          <span
+            class="badge text-bg-primary"
+            v-if="channel.unreadCount > 0"
+          >{{
+          channel.unreadCount
+        }}</span>
         </router-link>
       </li>
 

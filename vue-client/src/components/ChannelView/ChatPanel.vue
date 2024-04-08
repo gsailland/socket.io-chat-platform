@@ -78,15 +78,17 @@ const someoneIsTyping = computed(() => {
         v-if="store.selectedChannel.type === 'public'"
         :channel="store.selectedChannel"
       ></PublicChannelLabel>
-
       <PrivateChannelLabel
         v-else
         :channel="store.selectedChannel"
       ></PrivateChannelLabel>
     </div>
-
+    <pre>{{ store.selectedChannel }}</pre>
     <div class="mb-auto overflow-auto">
-      <div class="text-center" v-if="store.selectedChannel.hasMore">
+      <div
+        class="text-center"
+        v-if="store.selectedChannel.hasMore"
+      >
         <v-btn
           color="primary"
           outlined
@@ -101,21 +103,37 @@ const someoneIsTyping = computed(() => {
       <p v-if="!store.messages.length">No message yet</p>
 
       <ol class="list-unstyled">
-        <template v-for="(message, i) in store.messages" :key="message.id">
-          <li class="mt-3" v-if="shouldPrintHeader(message, i)">
-            <Username :id="message.from" class="fw-bold" />
+        <template
+          v-for="(message, i) in store.messages"
+          :key="message.id"
+        >
+          <li
+            class="mt-3"
+            v-if="shouldPrintHeader(message, i)"
+          >
+            <Username
+              :id="message.from"
+              class="fw-bold"
+            />
           </li>
           <li>
-            {{ message.content }}
+            {{ message }}) {{ message.content }}<br>
+            <small>{{ message.channelId }}</small>
           </li>
         </template>
       </ol>
     </div>
 
     <div>
-      <span v-if="someoneIsTyping" class="blinking">{{ someoneIsTyping }}</span>
+      <span
+        v-if="someoneIsTyping"
+        class="blinking"
+      >{{ someoneIsTyping }}</span>
 
-      <form @submit.prevent="submit" class="d-flex mt-1">
+      <form
+        @submit.prevent="submit"
+        class="d-flex mt-1"
+      >
         <div class="w-100">
           <textarea
             class="form-control"
@@ -160,9 +178,11 @@ textarea {
   0% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.2;
   }
+
   100% {
     opacity: 1;
   }
