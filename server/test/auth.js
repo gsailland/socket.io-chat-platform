@@ -24,7 +24,7 @@ describe("auth", () => {
         },
         body: JSON.stringify({
           username: "carol",
-          password: "changeit",
+          password: "secretpassword",
         }),
       });
 
@@ -49,7 +49,7 @@ describe("auth", () => {
         },
         body: JSON.stringify({
           username: "c",
-          password: "changeit",
+          password: "secret",
         }),
       });
 
@@ -83,7 +83,7 @@ describe("auth", () => {
         },
         body: JSON.stringify({
           username: "alice",
-          password: "changeit",
+          password: "secret",
         }),
       });
 

@@ -34,7 +34,7 @@ services:
   db:
     image: postgres:14
     environment:
-      POSTGRES_PASSWORD: "changeit"
+      POSTGRES_PASSWORD: "secret"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s

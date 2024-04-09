@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node entrypoint.js",
-    "dev": "node index.js",
+    "dev": "node --watch index.js",
     "test": "mocha --exit --recursive",
     "format": "prettier -w index.js src/ test/"
   },

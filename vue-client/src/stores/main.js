@@ -59,6 +59,7 @@ export const useMainStore = defineStore("main", {
 
       socket.on("channel:created", (channel) => this.addChannel(channel));
       socket.on("channel:joined", (channel) => this.addChannel(channel));
+      socket.on("channel:left", (channel) => this.removeChannel(channel));
 
       socket.on("message:sent", (message) => {
         this.addMessage(message, true);
@@ -145,7 +146,27 @@ export const useMainStore = defineStore("main", {
         this.channels.set(channel.id, channel);
       }
     },
-
+    removeChannel(channel) {
+      console.log('removeChannel')
+      if (this.channels.has(channel.id)) {
+        /*  const existingChannel = this.channels.get(channel.id);
+ 
+         Object.keys(channel).forEach((key) => {
+           existingChannel[key] = channel[key];
+         });
+ 
+         existingChannel.isLoaded = false;
+         existingChannel.typingUsers.clear();
+       } else {
+         channel.messageInput = "";
+         channel.messages = [];
+         channel.hasMore = false;
+         channel.isLoaded = false;
+         channel.typingUsers = new Map();
+  */
+        this.channels.delete(channel.id);/* , channel */
+      }
+    },
     async selectChannel(channelId) {
       this.selectedChannelId = channelId;
 

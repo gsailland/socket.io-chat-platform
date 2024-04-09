@@ -50,9 +50,9 @@ export async function setup() {
   const { pgPool, close } = await createApp(httpServer, {
     postgres: {
       user: "postgres",
-      password: "changeit",
+      password: "secret",
     },
-    sessionSecrets: ["changeit"],
+    sessionSecrets: ["secret"],
     disconnectionGraceDelay: 0,
   });
 

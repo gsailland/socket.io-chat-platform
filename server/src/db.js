@@ -249,6 +249,17 @@ export class DB {
     });
   }
 
+  async leaveChannel(userId, channelId) {
+    return doInTransaction(this.pgPool, async (client) => {
+      await client.query(
+        "DELETE FROM user_channels WHERE user_id = $1 and  channel_id = $2",
+        [userId, channelId],
+      );
+
+      return getChannel(client, userId, channelId);
+    });
+  }
+
   async listChannels(userId, query) {
     const subQuery = sql(
       `

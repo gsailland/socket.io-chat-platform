@@ -8,6 +8,7 @@ import bodyParser from "body-parser";
 import { DB } from "./db.js";
 import { createChannel } from "./channel/create.js";
 import { joinChannel } from "./channel/join.js";
+import { leaveChannel } from "./channel/leave.js";
 import { listChannels } from "./channel/list.js";
 import { searchChannels } from "./channel/search.js";
 import { ackMessage } from "./message/ack.js";
@@ -102,6 +103,7 @@ function initEventHandlers({ io, db, config }) {
   io.on("connection", async (socket) => {
     socket.on("channel:create", createChannel({ io, socket, db }));
     socket.on("channel:join", joinChannel({ io, socket, db }));
+    socket.on("channel:leave", leaveChannel({ io, socket, db }));
     socket.on("channel:list", listChannels({ io, socket, db }));
     socket.on("channel:search", searchChannels({ io, socket, db }));
 

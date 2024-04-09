@@ -14,9 +14,9 @@ const { close } = await createApp(httpServer, {
   postgres: {
     host: "db",
     user: "postgres",
-    password: "changeit",
+    password: "secret",
   },
-  sessionSecrets: ["changeit"],
+  sessionSecrets: ["secret"],
 });
 
 process.on("SIGTERM", async () => {

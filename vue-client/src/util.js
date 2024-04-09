@@ -12,3 +12,15 @@ export function debounce(fn, delay) {
     }, delay);
   };
 }
+
+export function exclude_array_of_objects_keys(arrayOfObjects, keysToExclude) {
+  return arrayOfObjects.map(obj => {
+    const filteredObj = {};
+    for (let key in obj) {
+      if (!keysToExclude.includes(key)) {
+        filteredObj[key] = obj[key];
+      }
+    }
+    return filteredObj;
+  });
+}

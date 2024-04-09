@@ -13,9 +13,9 @@ const httpServer = createServer();
 await createApp(httpServer, {
   postgres: {
     user: "postgres",
-    password: "changeit",
+    password: "secret",
   },
-  sessionSecrets: ["changeit"],
+  sessionSecrets: ["secret"],
   cors: {
     origin: ["http://localhost:5173"],
     credentials: true,

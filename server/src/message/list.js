@@ -14,6 +14,7 @@ const validate = ajv.compile({
 
 export function listMessages({ socket, db }) {
   return async (query, callback) => {
+    console.log('listMessages')
     if (typeof callback !== "function") {
       return;
     }

@@ -6,9 +6,16 @@ import VBtn from "@/components/common/VBtn.vue";
 import PublicChannelLabel from "@/components/ChannelView/PublicChannelLabel.vue";
 import PrivateChannelLabel from "@/components/ChannelView/PrivateChannelLabel.vue";
 import { socket } from "@/BackendService";
-
+import { exclude_array_of_objects_keys } from "@/util";
 const store = useMainStore();
 const router = useRouter();
+
+function onSuccess(channel) {
+  console.log('leaveChannel::onSuccess', channel)
+  /* store.addChannel(channel);
+  store.selectChannel(channel.id);
+  store.showJoinOrCreateChannelModel = false; */
+}
 
 async function leaveChannel(channel) {
   const res = await socket.emitWithAck("channel:leave", {
@@ -16,7 +23,17 @@ async function leaveChannel(channel) {
   });
 
   if (res.status === "OK") {
-    onSuccess(res.data);
+
+    store.selectChannel(undefined);
+    console.log(store.channels)
+    if (store.channels.has(channel.id)) {
+      store.channels.delete(channel.id)
+    }
+    /*  store.channels = store.channels.has(_channel => {
+       console.log(_channel, channel)
+     }) */
+    console.log(res)
+    //onSuccess(res.data);
   }
 }
 async function logOut() {
@@ -46,6 +63,9 @@ async function logOut() {
 
     <h6 class="mt-4">CHANNELS</h6>
 
+    <pre class="nav nav-pills d-block overflow-auto mh-20">
+          {{ exclude_array_of_objects_keys(store.publicChannels, ['messages']) }}
+        </pre>
     <ul class="nav nav-pills d-block overflow-auto mh-40">
       <li
         v-if="!store.isInitialized"
@@ -56,7 +76,6 @@ async function logOut() {
           <span class="placeholder w-75"></span>
         </div>
       </li>
-
       <li
         class="nav-item flex"
         v-for="channel in store.publicChannels"
@@ -76,14 +95,15 @@ async function logOut() {
             class="badge text-bg-primary"
             v-if="channel.unreadCount > 0"
           >{{
-          channel.unreadCount
-        }}</span>
+            channel.unreadCount
+          }}</span>
         </router-link>
         <v-btn
           color="primary"
+          outlined
+          icon="minus"
           @click="leaveChannel(channel)"
         >
-          Leave
         </v-btn>
       </li>
 
@@ -133,8 +153,8 @@ async function logOut() {
             class="badge text-bg-primary"
             v-if="channel.unreadCount > 0"
           >{{
-          channel.unreadCount
-        }}</span>
+            channel.unreadCount
+          }}</span>
         </router-link>
       </li>
 
@@ -169,6 +189,10 @@ async function logOut() {
 </template>
 
 <style scoped>
+.mh-20 {
+  max-height: 20%;
+}
+
 .mh-40 {
   max-height: 40%;
 }
