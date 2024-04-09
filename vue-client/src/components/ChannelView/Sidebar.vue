@@ -135,7 +135,7 @@ async function logOut() {
       </li>
 
       <li
-        class="nav-item"
+        class="nav-item flex"
         v-for="channel in store.privateChannels"
         :key="channel.id"
       >
@@ -156,6 +156,14 @@ async function logOut() {
             channel.unreadCount
           }}</span>
         </router-link>
+        <v-btn
+          color="primary"
+          outlined
+          icon="minus"
+          @click="leaveChannel(channel)"
+        >
+        </v-btn>
+
       </li>
 
       <li>
@@ -189,14 +197,6 @@ async function logOut() {
 </template>
 
 <style scoped>
-.mh-20 {
-  max-height: 20%;
-}
-
-.mh-40 {
-  max-height: 40%;
-}
-
 .channel-placeholder {
   height: 40px;
   padding-top: 8px;

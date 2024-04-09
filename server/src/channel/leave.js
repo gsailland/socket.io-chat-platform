@@ -36,10 +36,10 @@ export function leaveChannel({ io, socket, db }) {
       });
     }
 
-    logger.info("user [%s] has left channel [%s]", socket.userId, channel);
+    logger.info("user [%s] has left channel [%s]", socket.userId, payload.channelId);
 
     // broadcast to the other tabs of the same user
-    socket.to(userRoom(socket.userId)).emit("channel:left", channel);
+    socket.to(userRoom(socket.userId)).emit("channel:left", payload.channelId);
 
     //io.in(userRoom(socket.userId)).socketsLeave(`channel:${channel.id}`);
 

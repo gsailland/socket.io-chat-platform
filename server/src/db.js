@@ -318,7 +318,14 @@ export class DB {
       hasMore,
     };
   }
-
+  async isUserInChanel(userId, channelId) {
+    const userJoinedChannel = select("channel_id")
+      .from("user_channels")
+      .where({ user_id: userId, channel_id: channelId });
+    const { text, values } = userJoinedChannel.toParams();
+    const result = await this.pgPool.query(text, values);
+    return result.rows.length;
+  }
   async searchChannels(userId, { q, size }) {
     const usersInChannelSubQuery = sql(
       `

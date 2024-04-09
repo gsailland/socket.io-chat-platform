@@ -83,7 +83,12 @@ const someoneIsTyping = computed(() => {
         :channel="store.selectedChannel"
       ></PrivateChannelLabel>
     </div>
-    <pre>{{ store.selectedChannel }}</pre>
+    <pre class="
+      nav
+      nav-pills
+      d-block
+      overflow-auto
+      mh-20">{{ store.selectedChannel }}</pre>
     <div class="mb-auto overflow-auto">
       <div
         class="text-center"
@@ -117,8 +122,7 @@ const someoneIsTyping = computed(() => {
             />
           </li>
           <li>
-            {{ message }}) {{ message.content }}<br>
-            <small>{{ message.channelId }}</small>
+            {{ message.content }}
           </li>
         </template>
       </ol>

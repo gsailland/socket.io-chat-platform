@@ -59,7 +59,7 @@ export const useMainStore = defineStore("main", {
 
       socket.on("channel:created", (channel) => this.addChannel(channel));
       socket.on("channel:joined", (channel) => this.addChannel(channel));
-      socket.on("channel:left", (channel) => this.removeChannel(channel));
+      //socket.on("channel:left", (channel) => this.removeChannel(channel));
 
       socket.on("message:sent", (message) => {
         this.addMessage(message, true);
@@ -110,7 +110,7 @@ export const useMainStore = defineStore("main", {
       await this.loadMessagesForSelectedChannel();
 
       this.isInitialized = true;
-
+      if (!this.publicChannels.length) return null
       return this.publicChannels[0].id;
     },
 
@@ -243,17 +243,19 @@ export const useMainStore = defineStore("main", {
     },
 
     async sendMessage(content) {
+      const selectedChannelId = "b63108ae-5945-4939-a356-bb2253f73c51";
+      //const selectedChannelId = this.selectedChannelId;
       const message = {
         id: undefined,
         from: this.currentUser.id,
-        channelId: this.selectedChannelId,
+        channelId: selectedChannelId,
         content,
       };
 
       this.addMessage(message);
 
       const payload = {
-        channelId: this.selectedChannelId,
+        channelId: selectedChannelId,
         content,
       };
 

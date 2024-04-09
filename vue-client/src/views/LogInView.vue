@@ -39,13 +39,16 @@ async function onSubmit() {
     store.setCurrentUser(user);
 
     const channelId = await store.init();
-
+    if (!channelId) {
+      await router.push('/')
+    }
     if (route.query.returnTo) {
       await router.push(route.query.returnTo);
     } else {
       await router.push({ name: "channel", params: { channelId } });
     }
   } catch (_) {
+    console.log(_)
     errorMessage.value = "Something went wrong.";
     isLoading.value = false;
   }
@@ -56,7 +59,12 @@ async function onSubmit() {
   <div class="d-flex align-items-center w-100">
     <div class="form m-auto">
       <form @submit.prevent="onSubmit">
-        <img class="mb-4" src="@/assets/logo.svg" width="72" height="57" />
+        <img
+          class="mb-4"
+          src="@/assets/logo.svg"
+          width="72"
+          height="57"
+        />
         <h1 class="h3 mb-3 fw-normal">Please log in</h1>
 
         <div class="form-floating">
@@ -91,7 +99,10 @@ async function onSubmit() {
           Log in
         </v-btn>
 
-        <div v-if="errorMessage" class="text-danger">
+        <div
+          v-if="errorMessage"
+          class="text-danger"
+        >
           {{ errorMessage }}
         </div>
       </form>

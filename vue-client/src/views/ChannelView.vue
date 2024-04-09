@@ -20,6 +20,10 @@ watch(() => route.params.channelId, updateSelectChannel);
   <Sidebar />
 
   <ChatPanel />
+  <pre class="nav nav-pills d-block overflow-auto mh-40">
+    {{ Object.keys(store) }}
+    {{ store.users }}
+  </pre>
 </template>
 
 <style scoped></style>

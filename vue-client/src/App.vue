@@ -40,7 +40,7 @@ onBeforeMount(async () => {
       store.setCurrentUser(user);
 
       const channelId = await store.init();
-
+      if (!channelId) return;//new
       if (
         unauthenticatedRoutes.includes(route.name) ||
         !store.selectedChannel
@@ -50,7 +50,7 @@ onBeforeMount(async () => {
 
       return;
     }
-  } catch (e) {}
+  } catch (e) { }
 
   if (!unauthenticatedRoutes.includes(route.name)) {
     const query = {};

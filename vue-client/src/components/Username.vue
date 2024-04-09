@@ -23,10 +23,13 @@ watch(() => props.id, loadUsername);
 </script>
 
 <template>
-  <span v-if="isLoading" class="placeholder-glow ms-2" aria-hidden="true">
+  <span
+    v-if="isLoading"
+    class="placeholder-glow ms-2"
+    aria-hidden="true"
+  >
     <span class="placeholder" />
   </span>
-
   <span v-else>{{ username }}</span>
 </template>
 

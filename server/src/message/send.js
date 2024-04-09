@@ -29,6 +29,12 @@ export function sendMessage({ io, socket, db }) {
       content: payload.content,
     };
 
+    const isUserInChanel = await db.isUserInChanel(socket.userId, payload.channelId)
+    if (!isUserInChanel) {
+      return callback({
+        status: "ERROR",
+      });
+    }
     try {
       message.id = await db.insertMessage(message);
     } catch (_) {
