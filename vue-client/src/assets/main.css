@@ -12,6 +12,7 @@
 
 .flex {
   display: flex;
+  gap: 5px;
 }
 
 .mh-20 {
@@ -20,4 +21,9 @@
 
 .mh-40 {
   max-height: 40%;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
 }
