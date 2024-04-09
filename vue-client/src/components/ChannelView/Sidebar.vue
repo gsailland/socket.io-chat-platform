@@ -82,7 +82,7 @@ async function logOut() {
         :key="channel.id"
       >
         <router-link
-          class="nav-link d-flex"
+          class="nav-link d-flex flex-fill"
           :to="{ params: { channelId: channel.id } }"
           :class="store.isChannelSelected(channel.id) ? 'active' : 'text-black'"
         >
@@ -99,7 +99,7 @@ async function logOut() {
           }}</span>
         </router-link>
         <v-btn
-          color="primary"
+          color="danger"
           outlined
           icon="minus"
           @click="leaveChannel(channel)"

@@ -17,7 +17,14 @@ const additionalClasses = computed(() => {
   switch (props.color) {
     case "primary":
       c.push(props.outlined ? "btn-outline-primary" : "btn-primary");
+      break;
+    case "danger":
+      c.push(props.outlined ? "btn-outline-danger" : "btn-danger");
+      break;
+
   }
+
+
 
   return c;
 });
@@ -36,7 +43,12 @@ const additionalClasses = computed(() => {
       v-if="loading"
     ></span>
 
-    <svg class="bi pe-none" width="16" height="16" v-if="icon">
+    <svg
+      class="bi pe-none"
+      width="16"
+      height="16"
+      v-if="icon"
+    >
       <use :href="'#' + icon" />
     </svg>
 
